@@ -32,11 +32,11 @@ const swiper = new Swiper('.reviews-swiper', {
   }
 });
 
-var lastScrollTop = 0;
 
+// Анимация тоника
+let lastScrollTop = 0;
 const tonicImg = document.querySelector('.tonic img');
 let imgPosition = 0;
-let animated = false;
 window.addEventListener("scroll", function() {
   let scrolled = window.pageYOffset;
   const scrollSpread = 15;
@@ -57,23 +57,27 @@ window.addEventListener("scroll", function() {
   
   tonicImg.style.transform = `translate3d(0, ${imgPosition}px, 0)`;
   
-
-  if (!animated){
-    if (offset(line).top-1000 <= scrolled){
-      new Vivus('line', {start: 'autostart', type: 'oneByOne', duration: 1500});
-      animated = true;
-    }  
-  }
 });
 
-// Анимация при скролле
-let elements = document.querySelectorAll(".to__anim");
-let html = document.querySelector('html');
+// Переход по клику
+let menuLinks = document.querySelectorAll("[data-goto]");
+console.log(menuLinks);
+if (menuLinks.length > 0){
+   menuLinks.forEach(menuLinks => {
+      menuLinks.addEventListener("click", onMenuLinkClick)
+   });
 
+   function onMenuLinkClick(event){
+      const menuLink = event.target;
+      if (menuLink.dataset.goto && document.querySelector(menuLink.dataset.goto)){
+         const gotoBlock = document.querySelector(menuLink.dataset.goto);
+         const gotoBlockValue = gotoBlock.getBoundingClientRect().top + pageYOffset - document.querySelector(".header").offsetHeight;
 
-function offset(el) {
-  var rect = el.getBoundingClientRect(),
-  scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
-  scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+         window.scrollTo({
+            top: gotoBlockValue,
+            behavior: "smooth"
+         })
+         event.preventDefault();
+      }
+   }
 }
