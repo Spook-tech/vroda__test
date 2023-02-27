@@ -1,11 +1,18 @@
 const screenSize = window.screen.width;
 const line = document.querySelector('#line');
-
+const scrollBtn = document.querySelector('#to-top');
 document.body.addEventListener('click', (e) => {
   const target = e.target;
   
   if (target.classList.contains('reviews__show-more-btn')){
     document.querySelector('.reviews__row').classList.remove('hidden');
+  }
+
+  if(target.id = "to-top"){
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+   })
   }
 });
 
@@ -57,6 +64,13 @@ window.addEventListener("scroll", function() {
   
   tonicImg.style.transform = `translate3d(0, ${imgPosition}px, 0)`;
   
+
+  // Кнопка вверх
+  if (scrolled > 100){
+    scrollBtn.classList.add('active');
+  }else{
+    scrollBtn.classList.remove('active');
+  }
 });
 
 // Переход по клику
