@@ -8,7 +8,8 @@ document.body.addEventListener('click', (e) => {
     document.querySelector('.reviews__row').classList.remove('hidden');
   }
 
-  if(target.id = "to-top"){
+  if(target.id == "to-top" || target.closest("#top-top")){
+    console.log('lol');
     window.scrollTo({
       top: 0,
       behavior: "smooth"
